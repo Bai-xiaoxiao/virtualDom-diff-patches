@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="diff.js"></script>
+		<script src="element.js"></script>
+		<script src="patch.js"></script>
+		<script>
+			let virtualDom = createElement('ul',{class:'list',style:'color:red;'},[
+				createElement('li',{class:'item'},['利群']),
+				createElement('li',{class:'item'},['玉溪']),
+				createElement('li',{class:'item'},['黄鹤楼']),
+			]);
+			// 对象形势的结构展示
+			console.log(virtualDom);
+			
+			// 渲染dom
+			let el = render(virtualDom); // 得到dom元素
+			console.log(el);
+			renderDom(el,document.querySelector('body'));
+			
+			
+			// 创建另一个新的虚拟DOM
+			let virtualDom2 = createElement('ul', {class: 'list-group'}, [
+				createElement('li', {class: 'item active'}, ['云烟']),
+				createElement('li', {class: 'item'}, ['贵烟']),
+				createElement('li', {class: 'item'}, ['苏烟']),
+				createElement('li', {class: 'item'}, [createElement('span',{},['叶子烟'])]),
+			]);
+			// diff一下两个不同的虚拟DOM
+			let patches = diff(virtualDom, virtualDom2);
+			console.log(patches);
+			// 将变化打补丁，更新到el
+			patch(el, patches);
+		</script>
+	</body>
+</html>
